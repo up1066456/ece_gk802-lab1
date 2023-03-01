@@ -15,5 +15,5 @@ def more(text):
 url = input('url?')  # προσδιορισμός του url
 
 with requests.get(url) as response:  # το αντικείμενο response
-    html = response.text
-    more(html)
+    print(response.headers)
+    ##more(html)
