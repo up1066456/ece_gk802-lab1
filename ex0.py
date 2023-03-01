@@ -9,6 +9,7 @@ def more(text):
         if count % 30 == 0:
             reply = input('Show more (y/n)? ')
             if reply == 'n':
+                
                 break
 
 
