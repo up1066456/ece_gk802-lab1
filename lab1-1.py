@@ -1,21 +1,30 @@
-import requests  # εισαγωγή της βιβλιοθήκης
+import requests
 
-url = 'http://youtube.com/'  # προσδιορισμός του url
+url = input("\nenter url ")
 
-with requests.get(url) as response:  # το αντικείμενο response
+with requests.get(url) as response:
     headers=response.headers
-    cookiesnames=response.cookies
+    cookiesnames=response.cookies.values()
+
 print("\nHeaders:",headers)
 print("\nServer:", headers["Server"])
-cookies=headers["Set-Cookie"].split("; ")
-print("\nCookies:",cookies)
-temp=[[]]
-i=0
-for token in cookies:
-    temp[i].append(token)
-    if 'Expires' in token:
-        temp.append([])
-        i+=1
-print("\n",temp)
-print("\n",cookiesnames)
+try:
+    cookies=headers["set-cookie"].split("; ")
+    cookies=headers["Set-Cookie"].split("; ")
 
+    expires=[]
+    i=0
+    for token in cookies:
+        if 'Expires' in token or 'expires' in token:
+            expires.append(token)
+            i+=1
+
+    if len(expires)<=len(cookiesnames):
+        for j in range(len(expires)):
+            print("\ncookie name:",cookiesnames[j],expires[j], "\n")
+    else:
+        for j in range(len(cookiesnames)):
+            print("\ncookie name:",cookiesnames[j],expires[j], "\n")
+
+except:
+    print("\nno cookies found")
